@@ -1,4 +1,11 @@
-# Python scripts to monitor supervisor, if status is off then send message to slack and restart supervisor
+# Python scripts to monitor supervisor with cronjob and send messages to Slack via [Slack Webhook API](https://api.slack.com/messaging/webhooks)
+## Create a directory for the Python file and create supervisor_monitor.py
+```bash
+mkdir cron_tasks && cd cron_taks
+touch supervisor_monitor.log  # for log 
+nano supervisor_monitor.py
+```
+### Copy the code into supervisor_monitor.py
 
 ```python
 import requests
@@ -6,7 +13,6 @@ import subprocess
 
 # for backend channel
 SLACK_WEBHOOK_URL = ""
-
 
 def notify_slack(message, title="Supervisor status"):
     data = {
@@ -46,6 +52,19 @@ def check_supervisor_status():
 
 if __name__ == '__main__':
     check_supervisor_status()
+```
 
+## Run crontab by using this command
+### Open the crontab editor
+```bash
+crontab -e
+```
+### Write the following line to run the scripts every 10 minutes
+```bash
+*/10 * * * * /usr/bin/python3 /home/ubuntu/cron_tasks/supervisor_monitor.py >> /home/ubuntu/cron_tasks/supervisor_monitor.log
+```
 
+### Reload the corn
+```bash
+sudo service cron reload
 ```
