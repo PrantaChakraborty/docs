@@ -1,4 +1,4 @@
-                                                                                                                                                                                       !677
+                                                                                                                                                                             
 #!/bin/bash
 # bash script to create ssh key and update the config file
 # update teh SSH_DIR to your ssh directory
